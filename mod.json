@@ -5,5 +5,5 @@
     "id": "avscs.noshake",
     "name": "NoShake",
     "developer": "MetaGG2",
-    "description": "Disables shake for all levels similar to disable LDM in the default settings"
+    "description": "Disables shake for all levels similar to enable LDM in the default settings"
 }
