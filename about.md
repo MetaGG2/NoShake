@@ -1,6 +1,6 @@
 # NoShake
 
-Disables shake for all levels similar to `Enable LDM` in the default settings
+Disables shake for all levels similar to `Enable LDM` in the default settings.
 
 ### DISCLAIMER
 
