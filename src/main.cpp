@@ -2,23 +2,22 @@
 
 using namespace geode::prelude;
 
-
 #include <Geode/binding/GJGameLevel.hpp>
 #include <Geode/binding/CCMenuItemToggler.hpp>
 #include <Geode/binding/GameLevelOptionsLayer.hpp>
-#include <Geode/binding/GJBaseGameLayer.hpp>
 
 const int DISABLE_SHAKE_BUTTON_INDEX = 2;
+const cocos2d::ccColor3B SHADED_COLOR = { 166, 166, 166 };
 bool enabled = Mod::get()->getSettingValue<bool>("enabled");
 
 #include <Geode/modify/GJBaseGameLayer.hpp>
 class $modify(GJBaseGameLayer) {
-	TodoReturn shakeCamera(float p0, float p1, float p2) {
-		if (enabled) GJBaseGameLayer::shakeCamera(p0, p1, p2);
+	void shakeCamera(float p0, float p1, float p2) {
+		if (!enabled) GJBaseGameLayer::shakeCamera(p0, p1, p2);
 	}
 
-	TodoReturn applyShake(cocos2d::CCPoint& p0) {
-		if (enabled) GJBaseGameLayer::applyShake(p0);
+	void applyShake(cocos2d::CCPoint& p0) {
+		if (!enabled) GJBaseGameLayer::applyShake(p0);
 	}
 };
 
@@ -31,12 +30,10 @@ class $modify(NSGameLevelOptionsLayer, GameLevelOptionsLayer) {
 			return true;
 		auto disableShakeButton = reinterpret_cast<CCMenuItemToggler*>(this->m_buttonMenu->getChildren()->objectAtIndex(1));
 		disableShakeButton->m_notClickable = true;
-		auto color = typeinfo_cast<CCRGBAProtocol*>(disableShakeButton->m_onButton);
-		color->setColor({
-			127,
-			127,
-			127
-		});
+		auto color1 = typeinfo_cast<CCRGBAProtocol*>(disableShakeButton->m_onButton);
+		auto color2 = typeinfo_cast<CCRGBAProtocol*>(disableShakeButton->m_offButton);
+		color1->setColor(SHADED_COLOR);
+		color2->setColor(SHADED_COLOR);
 		// auto onSprite = CCSprite::createWithSpriteFrameName("GJ_checkOff_001.png");
 		// onSprite->setScale(0.8f);
 		// auto offSprite = CCSprite::createWithSpriteFrameName("GJ_checkOn_001.png");
